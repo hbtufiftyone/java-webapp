@@ -1,21 +1,35 @@
-pipeline{
+pipeline {
     agent any
-
-    tools {
-         maven 'maven'
-         jdk 'java'
+    tools{
+        maven "3.9.1"
     }
-
-    stages{
-        stage('checkout'){
-            steps{
-                checkout([$class: 'GitSCM', branches: [[name: '*/master']], extensions: [], userRemoteConfigs: [[credentialsId: 'github access', url: 'https://github.com/creatorshubham/java-webapp.git']]])
+    stages {
+        stage('Build stage') {
+            steps {
+                sh 'mvn clean package'
             }
         }
-        stage('build'){
-            steps{
-               sh 'mvn clean package'
+        stage('Test stage') {
+            steps {
+                sh 'mvn test'
             }
         }
+        stage('Deploy stage') {
+            script {
+          deploy adapters: [tomcat9(credentialsId: 'admin', path: '', url: 'http://3.110.161.64:8080')], contextPath: null, onFailure: false, war: '**/*.war' 
+        }
+        }
     }
+//     post{
+//         success{
+//             mail to: "shubhamc2211@gmail.com",
+//             subject: "Build is successfull",
+//             body: "success"
+//         }
+//     failure{
+//       mail to: "shubhamc2211@gmail.com",
+//             subject: "Build is failed",
+//             body: "failed"
+//     }
+//   }
 }
