@@ -1,21 +1,16 @@
-pipeline{
-    agent any
-
-    tools {
-         maven 'maven'
-         jdk 'java'
+pipeline {
+  agent any
+  tools {
+    maven '3.9.1' 
+  }
+  stages {
+    stage ('Build') {
+      steps {
+        sh 'mvn clean package'
+      }
     }
-
-    stages{
-        stage('checkout'){
-            steps{
-                checkout([$class: 'GitSCM', branches: [[name: '*/master']], extensions: [], userRemoteConfigs: [[credentialsId: 'github access', url: 'https://github.com/creatorshubham/java-webapp.git']]])
-            }
+    stage ('Testing') {
+      steps {
+      sh 'mvn test' 
         }
-        stage('build'){
-            steps{
-               sh 'mvn clean package'
-            }
-        }
-    }
-}
+      }
