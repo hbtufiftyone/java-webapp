@@ -1,28 +1,30 @@
 pipeline {
-  agent any
-  tools {
-    maven '3.9.1' 
-  }
-  stages {
-    stage ('Build') {
-      steps {
-        sh 'mvn clean package'
-      }
+    agent any
+    tools{
+        maven "3.9.1"
     }
-    stage ('Testing') {
-      steps {
-      sh 'mvn test' 
+    stages {
+        stage('Build stage') {
+            steps {
+                sh 'mvn clean package'
+            }
         }
-    post{
-        success{
-            mail to: "shubhamc2211@gmail.com",
-            subject: "Build is successfull",
-            body: "success"
+        stage('Test stage') {
+            steps {
+                sh 'mvn test'
+            }
         }
-    failure{
-      mail to: "shubhamc2211@gmail.com",
-            subject: "Build is failed",
-            body: "failed"
     }
-  }
-   }
+//     post{
+//         success{
+//             mail to: "shubhamc2211@gmail.com",
+//             subject: "Build is successfull",
+//             body: "success"
+//         }
+//     failure{
+//       mail to: "shubhamc2211@gmail.com",
+//             subject: "Build is failed",
+//             body: "failed"
+//     }
+//   }
+}
