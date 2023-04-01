@@ -1,11 +1,15 @@
 pipeline {
-    agent none
+    agent any
     tools{
         maven "3.9.1"
     }
     stages {
+        stage('Build stage') {
+            steps {
+                sh 'mvn clean package'
+            }
+        }
         stage('Test stage') {
-            agent any
             steps {
                 sh 'mvn test'
             }
