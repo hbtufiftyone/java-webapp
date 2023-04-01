@@ -13,6 +13,8 @@ pipeline {
       steps {
       sh 'mvn test' 
         }
+    }
+  }
     post{
         success{
             mail to: "shubhamc2211@gmail.com",
@@ -25,4 +27,4 @@ pipeline {
             body: "failed"
     }
   }
-   }
+}
