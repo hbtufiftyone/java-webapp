@@ -15,9 +15,11 @@ pipeline {
             }
         }
         stage('Deploy stage') {
+            steps{
             script {
           deploy adapters: [tomcat9(credentialsId: 'admin', path: '', url: 'http://3.110.161.64:8080')], contextPath: null, onFailure: false, war: '**/*.war' 
         }
+                }
         }
     }
 //     post{
