@@ -17,19 +17,19 @@ pipeline {
         stage('Deploy stage') {
             steps{
             script {
-          deploy adapters: [tomcat9(credentialsId: 'admin', path: '', url: 'http://15.206.66.13:8080')], contextPath: null, onFailure: false, war: '**/*.war' 
+          deploy adapters: [tomcat9(credentialsId: 'tomcred', path: '', url: 'http://13.239.97.234:9090/')], contextPath: null, onFailure: false, war: '**/*.war' 
         }
                 }
         }
     }
     post{
         success{
-            mail to: "shubhamc2211@gmail.com",
+            mail to: "chaurasiyasachin887@gmail.com",
             subject: "Build is successfull",
             body: "success"
         }
     failure{
-      mail to: "shubhamc2211@gmail.com",
+      mail to: "chaurasiyasachin887@gmail.com",
             subject: "Build is failed",
             body: "failed"
     }
